@@ -26,7 +26,7 @@ $loader = require_once __DIR__ . '/vendor/autoload.php';
 git clone https://github.com/tecs-company/tecsweb.git
 ```
 
-or download and extract the zip file if do not have Git installed:
+or download and extract the zip file if you do not have Git installed:
 
 https://github.com/tecs-company/tecsweb/archive/master.zip
 
@@ -56,7 +56,7 @@ This code creates only sign to be used as a parameter in URL to TecsWeb. It is u
 $tecs = new \Tecs\TecsWeb(
     'mechantSecretKey', // Private Secret Key provided by Tecs
     '12345678', // Merchant ID provided by Tecs
-    'https://example.tecs.at/payment' // URL of TecsWeb payment portal privided by Tecs
+    'https://example.tecs.at/payment' // URL of TecsWeb payment portal provided by Tecs
 );
 
 try {
