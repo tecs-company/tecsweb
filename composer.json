@@ -1,0 +1,18 @@
+{
+  "name": "tecs-company/tecsweb",
+  "description": "A PHP library for implementing secure payment portal tecsweb",
+  "require": {
+    "php": "^5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.7.*"
+  },
+  "autoload": {
+    "files": ["loader.php"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TecsTest\\": "test/"
+    }
+  }
+}
