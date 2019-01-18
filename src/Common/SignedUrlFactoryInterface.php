@@ -12,7 +12,7 @@ namespace Tecs\Common;
  * Interface SignedUrlFactoryInterface
  * @package Tecs\Common
  */
-interface SignedUrlFactoryInterface extends InputDataInterface
+interface SignedUrlFactoryInterface extends RequestDataInterface
 {
     /**
      * Creates Signed URL from data

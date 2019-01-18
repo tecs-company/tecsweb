@@ -12,7 +12,7 @@ namespace Tecs\Common;
  * Interface SignFactoryInterface
  * @package Tecs\Common
  */
-interface SignFactoryInterface extends InputDataInterface
+interface SignFactoryInterface extends RequestDataInterface
 {
     /**
      * Creates SHA1 HASH in uppercase from input data
