@@ -106,6 +106,12 @@ class TecsWeb implements SignFactoryInterface, SignedUrlFactoryInterface
                     sprintf('Data Field "%s" is not defined in input data', $mandatoryField)
                 );
             }
+
+            if (empty($data[$mandatoryField])) {
+                throw new \Exception(
+                    sprintf('Data Field "%s" has incorrect value', $mandatoryField)
+                );
+            }
         }
     }
 }

@@ -64,7 +64,7 @@ try {
         \Tecs\TecsWeb::AMOUNT => '100', // amount in cents - mandatory
         \Tecs\TecsWeb::TX_ID => '1000010006', // mandatory
         \Tecs\TecsWeb::TX_CURRENCY => 'EUR', // mandatory
-        \Tecs\TecsWeb::TX_DESC => 'Descriotion of the transaction', // mandatory
+        \Tecs\TecsWeb::TX_DESC => 'Description of the transaction', // mandatory
         \Tecs\TecsWeb::RECEIPT_NUMBER => '123', // mandatory
         \Tecs\TecsWeb::RETURN_URL => 'https://tecsweb-php-example.loc/return.php', // mandatory
         \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
