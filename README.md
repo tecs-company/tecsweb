@@ -134,7 +134,7 @@ Example of generating of cancellation URL in php:
 
 $tecs = new \Tecs\TecsWebCancelation(
     'merchantSecretKey', // Private Secret Key provided by Tecs
-    '80090777', // Merchant ID provided by Tecs
+    '12345678', // Merchant ID provided by Tecs
     'https://www.tecs.at/tecsweb/cancel_transaction.jsp' // URL of TecsWeb payment portal
 );
 
