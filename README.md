@@ -86,7 +86,7 @@ This code creates whole signed URL to be inserted into iframe on you page or to 
 $tecs = new \Tecs\TecsWeb(
     'mechantSecretKey', // Private Secret Key provided by Tecs
     '12345678', // Merchant ID provided by Tecs
-    'https://example.tecs.at/payment' // URL of TecsWeb payment portal privided by Tecs
+    'https://www.tecs.at/tecsweb/tecsweb.jsp' // URL of TecsWeb payment portal privided by Tecs
 );
 
 try {
@@ -121,10 +121,47 @@ catch (\Exception $e) {
 
 **NOTE:** For using more optional parameters look into Implementation Manual.
 
+### Cnancelation of Transaction
+
+When the online shop doesn't receive a response from TecsWeb within some predefined period,
+the transaction should be cancelled. For that purpose, the cancellation URL with valid parameters could be called.
+Example of generating of cancellation URL in php:
+
+**Note:** Loading the library is the same as above
+
+```php
+<?php
+
+$tecs = new \Tecs\TecsWebCancelation(
+    'merchantSecretKey', // Private Secret Key provided by Tecs
+    '80090777', // Merchant ID provided by Tecs
+    'https://www.tecs.at/tecsweb/cancel_transaction.jsp' // URL of TecsWeb payment portal
+);
+
+try {
+    $URL = $tecs->createSignedUrl([
+        \Tecs\TecsWebCancelation::AMOUNT => '100', // amount in cents (mandatory)
+        \Tecs\TecsWebCancelation::TX_ID => '1000010129', // mandatory - must be unique
+        \Tecs\TecsWebCancelation::TX_CURRENCY => 'EUR', // mandatory
+        \Tecs\TecsWebCancelation::TX_DESC => 'Test', // mandatory
+        \Tecs\TecsWebCancelation::RECEIPT_NUMBER => '12345', // mandatory
+        \Tecs\TecsWebCancelation::RETURN_URL => 'https://tecsweb-fake.loc/cancelationReturn.php', // mandatory
+        \Tecs\TecsWebCancelation::ORIG_TX_ID => '1000010128', // mandatory - TX ID to be canceled
+        \Tecs\TecsWeb::TX_DATE_TIME=> date('YmdHis'), // optional in format YYYYMMDDHHMMSS
+        //\Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
+    ]);
+}
+catch (\Exception $e) {
+    exit($e->getMessage());
+}
+
+?>
+```
+
 
 ### Processing the Response
 
-When the payment is done TecsWeb service sends back the response.
+When **the payment or cancelation of transaction** is done TecsWeb service sends back the response.
 You may implement TecWebResponse helper into your php code.
 
 **!!!IMPORTANT: You should log every response to be able find some mistakes or unprocessed payments when they occur.**

@@ -9,5 +9,6 @@ require_once __DIR__ . '/src/Generator/ResponseSign.php';
 require_once __DIR__ . '/src/Generator/Sign.php';
 require_once __DIR__ . '/src/Generator/SignedUrl.php';
 require_once __DIR__ . '/src/TecsWeb.php';
+require_once __DIR__ . '/src/TecsWebCancelation.php';
 require_once __DIR__ . '/src/TecsWebResponse.php';
 

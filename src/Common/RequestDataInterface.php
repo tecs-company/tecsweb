@@ -28,4 +28,5 @@ interface RequestDataInterface
     const MESSAGE_TYPE = 'Message-Type';
     const TX_ORIG_ID = 'Txorigid';
     const CARD_NUMBER_POST = 'CardNumberPost';
+    const ORIG_TX_ID = 'origTRXNum';
 }
