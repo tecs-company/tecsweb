@@ -17,7 +17,7 @@ use Tecs\Generator\SignedUrl;
  * Class TecsWeb
  * @package Tecs
  */
-class TecsWebCancelation implements SignFactoryInterface, SignedUrlFactoryInterface
+class TecsWebCancellation implements SignFactoryInterface, SignedUrlFactoryInterface
 {
     /**
      * Private Secret Key
