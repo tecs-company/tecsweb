@@ -8,13 +8,13 @@
 
 namespace Tecs\Generator;
 
-use Tecs\Common\InputDataInterface;
+use Tecs\Common\RequestDataInterface;
 
 /**
  * Class Sign
  * @package Tecs\Generator
  */
-class SignedUrl implements InputDataInterface
+class SignedUrl implements RequestDataInterface
 {
     /**
      * @var array
@@ -30,6 +30,10 @@ class SignedUrl implements InputDataInterface
      * @var Sign
      */
     private $sign;
+
+    /**
+     * @var string
+     */
     private $gateUrl;
 
     /**

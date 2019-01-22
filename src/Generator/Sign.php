@@ -8,13 +8,13 @@
 
 namespace Tecs\Generator;
 
-use Tecs\Common\InputDataInterface;
+use Tecs\Common\RequestDataInterface;
 
 /**
  * Class Sign
  * @package Tecs\Generator
  */
-class Sign implements InputDataInterface
+class Sign implements RequestDataInterface
 {
     /**
      * @var array

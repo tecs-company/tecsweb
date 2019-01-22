@@ -12,7 +12,7 @@ namespace Tecs\Common;
  * Interface InputDataInterface
  * @package Tecs\Common
  */
-interface InputDataInterface
+interface RequestDataInterface
 {
     const AMOUNT = 'amt';
     const TX_ID = 'txid';
@@ -28,4 +28,5 @@ interface InputDataInterface
     const MESSAGE_TYPE = 'Message-Type';
     const TX_ORIG_ID = 'Txorigid';
     const CARD_NUMBER_POST = 'CardNumberPost';
+    const ORIG_TX_ID = 'origTRXNum';
 }
