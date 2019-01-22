@@ -92,13 +92,13 @@ $tecs = new \Tecs\TecsWeb(
 try {
     $signedUrl = $tecs->createSignedUrl([
         \Tecs\TecsWeb::AMOUNT => '100', // amount in cents (mandatory)
-        \Tecs\TecsWeb::TX_ID => '1000010006', // mandatory
+        \Tecs\TecsWeb::TX_ID => '1000010006', // mandatory, must be unique
         \Tecs\TecsWeb::TX_CURRENCY => 'EUR', // mandatory
         \Tecs\TecsWeb::TX_DESC => 'Test', // mandatory
         \Tecs\TecsWeb::RECEIPT_NUMBER => '1', // mandatory
         \Tecs\TecsWeb::RETURN_URL => 'https://tecsweb-php-example.loc/return.php', // mandatory
-        \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
         \Tecs\TecsWeb::TX_DATE_TIME=> date('YmdHis'), // optional in format YYYYMMDDHHMMSS
+        \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
     ]);
 }
 catch (\Exception $e) {
@@ -120,4 +120,80 @@ catch (\Exception $e) {
 ```
 
 **NOTE:** For using more optional parameters look into Implementation Manual.
+
+
+### Processing the Response
+
+When the payment is done TecsWeb service sends back the response.
+You may implement TecWebResponse helper into your php code.
+
+**!!!IMPORTANT: You should log every response to be able find some mistakes or unprocessed payments when they occur.**
+**You may use "getAllData()" to log the whole payload.** 
+
+As above you have to include a class loader. It depends on using composer or not:
+
+```php
+<?php
+
+// Composer Way
+$loader = require_once __DIR__ . '/vendor/autoload.php';
+
+// Without Composer
+require __DIR__ . '/tecsweb/loader.php';
+
+?>
+```
+
+**Example of implementing TecsWebResponse:**
+
+```php
+<?php
+
+$tecsWebResponse = new \Tecs\TecsWebResponse(
+    'mechantSecretKey' // Merchant Secret Key
+);
+
+$signCheck = $tecsWebResponse->isSignedCorrectly();
+
+// Bad Sign
+if (!$signCheck) {
+
+    // $myTransactionLogger->log('error', $tecsWebResponse->getAllData());
+
+    // do something when sign is not valid
+}
+
+// When the response has error
+else if ($tecsWebResponse->hasError()) {
+    $errorCode = $tecsWebResponse->getResponseCode();
+    $errorMessage = $tecsWebResponse->getResponseText();
+
+    // $myTransactionLogger->log('error', $tecsWebResponse->getAllData());
+
+    // do something when error occurs
+}
+
+// When is Authorized
+else {
+    // Getting Data Using Key Constants to prevent mistakes
+    $data = $tecsWebResponse->getAllData();
+
+    $transactionId       = $data[ \Tecs\TecsWebResponse::TX_ID ];
+    $transactionDateTime = $data[ \Tecs\TecsWebResponse::TX_DATE_TIME ];
+    $authorizationNumber = $data[ \Tecs\TecsWebResponse::AUTHORIZATION_NUMBER ];
+
+    // ... etc.
+
+    // Getting Data Using TecWebResponse API
+    $transactionId       = $tecsWebResponse->getTXID();
+    $transactionDateTime = $tecsWebResponse->getTXDateTime();
+    $authorizationNumber = $tecsWebResponse->getAuthorizationNumber();
+    // ... etc.
+
+    // $myTransactionLogger->log('info', $tecsWebResponse->getAllData());
+}
+
+?>
+```
+
 

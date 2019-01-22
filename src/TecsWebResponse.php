@@ -54,17 +54,27 @@ class TecsWebResponse implements ResponseSignCheckInterface
     }
 
     /**
-     * Returns an error if occurres or NULL
-     *
+     * @return bool
+     */
+    public function hasError()
+    {
+        return ((int) $this->data[self::RESPONSE_CODE] !== 0);
+    }
+
+    /**
      * @return string|null
      */
-    public function getError()
+    public function getResponseText()
     {
-        if ((int) $this->data[self::RESPONSE_CODE] === 0) {
-            return null;
-        }
-
         return $this->data[self::RESPONSE_TEXT];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResponseCode()
+    {
+        return $this->get(self::RESPONSE_CODE);
     }
 
     /**
@@ -185,6 +195,14 @@ class TecsWebResponse implements ResponseSignCheckInterface
     public function getCardReferenceNumber()
     {
         return $this->get(self::CARD_REF_NUMBER);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllData()
+    {
+        return $this->data;
     }
 
     /**
