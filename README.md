@@ -233,4 +233,65 @@ else {
 ?>
 ```
 
+## APIs
+
+### Tecs\TecsWeb
+
+| method            | params                | returns                 |
+|-------------------|-----------------------|-------------------------|
+| createSign        | data (array)          | Tecs\Genrator\Sign      |
+| createSignedUrl   | data (array)          | Tecs\Genrator\SignedUrl |
+
+
+
+### Tecs\TecsWebCancellation
+
+| method            | params                | returns                 |
+|-------------------|-----------------------|-------------------------|
+| createSign        | data (array)          | Tecs\Genrator\Sign      |
+| createSignedUrl   | data (array)          | Tecs\Genrator\SignedUrl |
+
+
+### Tecs\TecsWebResponse
+
+| method            | params                | returns                 |
+|-------------------|-----------------------|-------------------------|
+| isSignedCorrectly | -                     | boolean                 |
+| hasError          | -                     | boolean                 |
+| getResponseText   | -                     | string                  |
+| getResponseCode   | -                     | string                  |
+| getTXID           | -                     | string                  |
+| getTXDateTime          | -                     | string                  |
+| getAuthorizationNumber | -                     | string                  |
+| getVUNumber       | -                     | string                  |
+| getOperatorID     | -                     | string                  |
+| getSerieNumber    | -                     | string                  |
+| getOriginalTXID   | -                     | string                  |
+| getSTAN           | -                     | string                  |
+| getOriginalSTAN   | -                     | string                  |
+| getSVC            | -                     | string                  |
+| getUserData       | -                     | string                  |
+| getSign           | -                     | string                  |
+| getAcquirerName   | -                     | string                  |
+| getCardType       | -                     | string                  |
+| getCardReferenceNumber | -                     | string                  |
+| getAllData        | -                     | string                  |
+
+
+### Tecs\Generator\Sign
+
+| method            | params                | returns                 |
+|-------------------|-----------------------|-------------------------|
+| getSign           | -                     | string                  |
+| __toString        | -                     | string                  |
+
+### Tecs\Generator\SignedUrl
+
+| method            | params                | returns                 |
+|-------------------|-----------------------|-------------------------|
+| getSignedUrl      | -                     | string                  |
+| __toString        | -                     | string                  |
+
+
+
 
