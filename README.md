@@ -7,7 +7,7 @@ A PHP library for implementing secure payment portal TecsWeb
 ### Via Composer
 
 ```
-composer require tecs-company/tecsweb
+composer require tecspayment/tecsweb-b2b-integration-php
 ```
 
 When using composer you need to insert autoloader to your code like in example:
@@ -23,12 +23,12 @@ $loader = require_once __DIR__ . '/vendor/autoload.php';
 ### From GitHub
 
 ```
-git clone https://github.com/tecs-company/tecsweb.git
+https://github.com/tecspayment/tecsweb-b2b-integration-php.git
 ```
 
 or download and extract the zip file if you do not have Git installed:
 
-https://github.com/tecs-company/tecsweb/archive/master.zip
+https://github.com/tecspayment/tecsweb-b2b-integration-php/archive/master.zip
 
 Then you need to use internal loader of the library:
 
@@ -56,7 +56,7 @@ This code creates only sign to be used as a parameter in URL to TecsWeb. It is u
 $tecs = new \Tecs\TecsWeb(
     'mechantSecretKey', // Private Secret Key provided by Tecs
     '12345678', // Merchant ID provided by Tecs
-    'https://example.tecs.at/payment' // URL of TecsWeb payment portal provided by Tecs
+    'https://test.tecs.at/tecsweb/tecswebmvc_start.do' // URL of TecsWeb payment portal provided by Tecs
 );
 
 try {
@@ -86,7 +86,7 @@ This code creates whole signed URL to be inserted into iframe on you page or to 
 $tecs = new \Tecs\TecsWeb(
     'mechantSecretKey', // Private Secret Key provided by Tecs
     '12345678', // Merchant ID provided by Tecs
-    'https://www.tecs.at/tecsweb/tecsweb.jsp' // URL of TecsWeb payment portal privided by Tecs
+    'https://test.tecs.at/tecsweb/tecswebmvc_start.do' // URL of TecsWeb payment portal privided by Tecs
 );
 
 try {
@@ -135,7 +135,7 @@ Example of generating of cancellation URL in php:
 $tecs = new \Tecs\TecsWebCancelation(
     'merchantSecretKey', // Private Secret Key provided by Tecs
     '12345678', // Merchant ID provided by Tecs
-    'https://www.tecs.at/tecsweb/cancel_transaction.jsp' // URL of TecsWeb payment portal
+    'https://test.tecs.at/tecsweb/cancel_transaction.jsp' // URL of TecsWeb payment portal
 );
 
 try {
