@@ -45,37 +45,6 @@ The path to loader.php depends on the location where you extracted the zip file 
 
 ## Usage
 
-
-### Creating a sign only
-
-This code creates only sign to be used as a parameter in URL to TecsWeb. It is usable when you create the URL your own way, or you use a javascript to create iframe widget. 
-
-```php
-<?php
-
-$tecs = new \Tecs\TecsWeb(
-    'mechantSecretKey', // Private Secret Key provided by Tecs
-    '12345678', // Merchant ID provided by Tecs
-    'https://test.tecs.at/tecsweb/tecswebmvc_start.do' // URL of TecsWeb payment portal provided by Tecs
-);
-
-try {
-    $sign = $tecs->createSign([
-        \Tecs\TecsWeb::AMOUNT => '100', // amount in cents - mandatory
-        \Tecs\TecsWeb::TX_ID => '1000010006', // mandatory
-        \Tecs\TecsWeb::TX_CURRENCY => 'EUR', // mandatory
-        \Tecs\TecsWeb::TX_DESC => 'Description of the transaction', // mandatory
-        \Tecs\TecsWeb::RECEIPT_NUMBER => '123', // mandatory
-        \Tecs\TecsWeb::RETURN_URL => 'https://tecsweb-php-example.loc/return.php', // mandatory
-        \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
-    ]);
-}
-catch (\Exception $e) {
-    // Do some error handling
-}
-
-```
-
 ### Creating a signed URL
 
 This code creates whole signed URL to be inserted into iframe on you page or to be redirected to from your page.
@@ -98,6 +67,37 @@ try {
         \Tecs\TecsWeb::RECEIPT_NUMBER => '1', // mandatory
         \Tecs\TecsWeb::RETURN_URL => 'https://tecsweb-php-example.loc/return.php', // mandatory
         \Tecs\TecsWeb::TX_DATE_TIME=> date('YmdHis'), // optional in format YYYYMMDDHHMMSS
+        \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
+    ]);
+}
+catch (\Exception $e) {
+    // Do some error handling
+}
+
+```
+
+
+### Creating a sign only
+
+This code creates only sign to be used as a parameter in URL to TecsWeb. It is usable when you create the URL your own way, or you use a javascript to create iframe widget. 
+
+```php
+<?php
+
+$tecs = new \Tecs\TecsWeb(
+    'mechantSecretKey', // Private Secret Key provided by Tecs
+    '12345678', // Merchant ID provided by Tecs
+    'https://test.tecs.at/tecsweb/tecswebmvc_start.do' // URL of TecsWeb payment portal provided by Tecs
+);
+
+try {
+    $sign = $tecs->createSign([
+        \Tecs\TecsWeb::AMOUNT => '100', // amount in cents - mandatory
+        \Tecs\TecsWeb::TX_ID => '1000010006', // mandatory
+        \Tecs\TecsWeb::TX_CURRENCY => 'EUR', // mandatory
+        \Tecs\TecsWeb::TX_DESC => 'Description of the transaction', // mandatory
+        \Tecs\TecsWeb::RECEIPT_NUMBER => '123', // mandatory
+        \Tecs\TecsWeb::RETURN_URL => 'https://tecsweb-php-example.loc/return.php', // mandatory
         \Tecs\TecsWeb::USER_DATA => 'ONR=S20110112000006;ODT=12.01.2011;IAM=1000;NRI=3;IDY=30;', // optional
     ]);
 }
@@ -187,7 +187,8 @@ require __DIR__ . '/tecsweb/loader.php';
 <?php
 
 $tecsWebResponse = new \Tecs\TecsWebResponse(
-    'mechantSecretKey' // Merchant Secret Key
+    'mechantSecretKey', // Merchant Secret Key
+    \Tecs\TecsWebResponse::RESPONSE_FORMAT_QUERY // Response Data Format (optional), default is GET query
 );
 
 $signCheck = $tecsWebResponse->isSignedCorrectly();
