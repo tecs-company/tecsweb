@@ -18,9 +18,6 @@ use Tecs\Generator\ResponseSign;
  */
 class TecsWebResponse implements ResponseSignCheckInterface
 {
-    const RESPONSE_FORMAT_QUERY = 'QUERY';
-    const RESPONSE_FORMAT_FORM = 'FORM';
-    const RESPONSE_FORMAT_JSON = 'JSON';
 
     /**
      * Private Secret Key
@@ -39,15 +36,15 @@ class TecsWebResponse implements ResponseSignCheckInterface
     /**
      * TecsWebResponse constructor.
      * @param string $privateSecretKey
-     * @param string $inputFormat
+     * @param array $data
      * @throws Exception
      */
     public function __construct(
         $privateSecretKey,
-        $inputFormat = self::RESPONSE_FORMAT_QUERY
+        array $data
     ) {
         $this->privateSecretKey = $privateSecretKey;
-        $this->data = $this->getDataByInputFormat($inputFormat);
+        $this->data = $data;
     }
 
     /**
@@ -221,26 +218,5 @@ class TecsWebResponse implements ResponseSignCheckInterface
     private function get($key)
     {
         return isset($this->data[$key]) ? $this->data[$key] : null;
-    }
-
-    /**
-     * @param $inputFormat
-     * @return array
-     * @throws Exception
-     */
-    private function getDataByInputFormat($inputFormat)
-    {
-        if (!in_array($inputFormat, [self::RESPONSE_FORMAT_JSON, self::RESPONSE_FORMAT_FORM, self::RESPONSE_FORMAT_QUERY])) {
-            throw new Exception('Wrong or no input format defined');
-        }
-
-        switch ($inputFormat) {
-            case self::RESPONSE_FORMAT_JSON;
-                return json_decode(file_get_contents('php://input'), true);
-            case self::RESPONSE_FORMAT_QUERY;
-                return $_GET;
-            case self::RESPONSE_FORMAT_FORM;
-                return $_POST;
-        }
     }
 }

@@ -186,9 +186,11 @@ require __DIR__ . '/tecsweb/loader.php';
 ```php
 <?php
 
+$tecsWebResponseToken = $_GET; 
+
 $tecsWebResponse = new \Tecs\TecsWebResponse(
     'mechantSecretKey', // Merchant Secret Key
-    \Tecs\TecsWebResponse::RESPONSE_FORMAT_QUERY // Response Data Format (optional), default is GET query
+    $tecsWebResponseToken // Response Data Format (optional), default is GET query
 );
 
 $signCheck = $tecsWebResponse->isSignedCorrectly();
@@ -199,16 +201,6 @@ if (!$signCheck) {
     // $myTransactionLogger->log('error', $tecsWebResponse->getAllData());
 
     // do something when sign is not valid
-}
-
-// When the response has error
-else if ($tecsWebResponse->hasError()) {
-    $errorCode = $tecsWebResponse->getResponseCode();
-    $errorMessage = $tecsWebResponse->getResponseText();
-
-    // $myTransactionLogger->log('error', $tecsWebResponse->getAllData());
-
-    // do something when error occurs
 }
 
 // When is Authorized
