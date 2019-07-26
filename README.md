@@ -45,7 +45,7 @@ The path to loader.php depends on the location where you extracted the zip file 
 
 ## Usage
 
-### Creating TecsWeb Request Toḱen
+### Creating TecsWeb Request Token
 
 This code creates whole signed URL to be inserted into iframe on you page or to be redirected to from your page.
 
