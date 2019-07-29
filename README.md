@@ -194,7 +194,7 @@ else {
 | getAcquirerName   | -                     | string                  |
 | getCardType       | -                     | string                  |
 | getCardReferenceNumber | -                     | string                  |
-| getAllData        | -                     | string                  |
+| getAllData        | -                     | array                  |
 
 ### Tecs\Generator\SignedUrl
 
