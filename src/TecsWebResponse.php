@@ -60,14 +60,6 @@ class TecsWebResponse implements ResponseSignCheckInterface
     }
 
     /**
-     * @return bool
-     */
-    public function hasError()
-    {
-        return ((int) $this->data[strtolower(self::RESPONSE_CODE)] !== 0);
-    }
-
-    /**
      * @return string|null
      */
     public function getResponseText()
