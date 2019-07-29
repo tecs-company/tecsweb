@@ -44,7 +44,7 @@ class TecsWebResponse implements ResponseSignCheckInterface
         array $data
     ) {
         $this->privateSecretKey = $privateSecretKey;
-        $this->data = $data;
+        $this->data = $this->convertToLowerCase($data);
     }
 
     /**
@@ -64,7 +64,7 @@ class TecsWebResponse implements ResponseSignCheckInterface
      */
     public function hasError()
     {
-        return ((int) $this->data[self::RESPONSE_CODE] !== 0);
+        return ((int) $this->data[strtolower(self::RESPONSE_CODE)] !== 0);
     }
 
     /**
@@ -217,6 +217,20 @@ class TecsWebResponse implements ResponseSignCheckInterface
      */
     private function get($key)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : null;
+        return isset($this->data[strtolower($key)]) ? $this->data[strtolower($key)] : null;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function convertToLowerCase(array $data)
+    {
+        $out = [];
+        foreach ($data as $key => $value) {
+            $out[strtolower($key)] = $value;
+        }
+
+        return $out;
     }
 }

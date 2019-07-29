@@ -20,7 +20,7 @@ interface RequestDataInterface
     const TX_CURRENCY = 'txcur';
     const RECEIPT_NUMBER = 'receiptnumber';
     const RETURN_URL = 'rurl';
-    const USER_DATA = 'User-Data';
+    const USER_DATA = 'User-data';
     const LANG = 'lang';
     const TX_DATE_TIME = 'Date-Time-TX';
     const TX_SOURCE_ID = 'TX-Source-Id';
