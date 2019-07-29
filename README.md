@@ -177,7 +177,6 @@ else {
 | method            | params                | returns                 |
 |-------------------|-----------------------|-------------------------|
 | isSignedCorrectly | -                     | boolean                 |
-| hasError          | -                     | boolean                 |
 | getResponseText   | -                     | string                  |
 | getResponseCode   | -                     | string                  |
 | getTXID           | -                     | string                  |
