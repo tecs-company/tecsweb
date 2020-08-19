@@ -21,7 +21,7 @@ abstract class AbstractResponse
     
     public function getData()
     {
-        return; $this->data;
+        return $this->data;
     }
 
     public function __call($name, $arguments)

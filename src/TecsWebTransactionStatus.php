@@ -76,7 +76,7 @@ class TecsWebTransactionStatus implements Environtment
 
     /**
      * @param string $transactionId
-     * @return TransactionStatusResponse
+     * @return TransactionStatusResponse|boolean
      */
     public function getTransactionStatus($transactionId = '') {
         $data = array(
@@ -98,6 +98,10 @@ class TecsWebTransactionStatus implements Environtment
         ));
 
         $result = curl_exec($ch);
+
+        if (!$result) {
+            return false;
+        }
 
         return new TransactionStatusResponse(json_decode($result, true));
     }
