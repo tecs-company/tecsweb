@@ -2,9 +2,11 @@
   "name": "tecs-company/tecsweb",
   "description": "A PHP library for implementing secure payment portal tecsweb",
   "require": {
-    "php": ">=5.4"
+    "php": ">=5.6"
   },
   "require-dev": {
+    "ext-json": "*",
+    "ext-curl": "*",
     "phpunit/phpunit": "^8.2"
   },
   "autoload": {
