@@ -42,11 +42,13 @@ class ResponseSign implements ResponseDataInterface
      */
     public function getSign()
     {
-        $toHash = $this->data[self::RESPONSE_CODE];
-        $toHash .= $this->data[self::RESPONSE_TEXT];
-        $toHash .= $this->data[self::TX_ID];
-        $toHash .= isset($this->data[self::CARD_REF_NUMBER]) ? $this->data[self::CARD_REF_NUMBER] : '';
-        $toHash .= isset($this->data[self::USER_DATA]) ? $this->data[self::USER_DATA] : '';
+        $toHash = $this->data[strtolower(self::RESPONSE_CODE)];
+        $toHash .= $this->data[strtolower(self::RESPONSE_TEXT)];
+        $toHash .= $this->data[strtolower(self::TX_ID)];
+        $toHash .= isset($this->data[strtolower(self::CARD_REF_NUMBER)])
+            ? $this->data[strtolower(self::CARD_REF_NUMBER)] : '';
+        $toHash .= isset($this->data[strtolower(self::USER_DATA)])
+            ? $this->data[strtolower(self::USER_DATA)] : '';
         $toHash .= $this->secret;
 
         return strtoupper(sha1($toHash));

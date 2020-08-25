@@ -8,6 +8,7 @@
 
 namespace Tecs;
 
+use Exception;
 use Tecs\Common\ResponseSignCheckInterface;
 use Tecs\Generator\ResponseSign;
 
@@ -17,28 +18,33 @@ use Tecs\Generator\ResponseSign;
  */
 class TecsWebResponse implements ResponseSignCheckInterface
 {
+
     /**
      * Private Secret Key
      *
      * @var string
      */
-    private $privateSecretKey = 'secretMerchantKey';
+    protected $privateSecretKey = 'secretMerchantKey';
 
     /**
      * GET DATA
      *
      * @var array
      */
-    private $data = [];
+    protected $data = [];
 
     /**
      * TecsWebResponse constructor.
      * @param string $privateSecretKey
+     * @param array $data
+     * @throws Exception
      */
-    public function __construct($privateSecretKey)
-    {
+    public function __construct(
+        $privateSecretKey,
+        array $data
+    ) {
         $this->privateSecretKey = $privateSecretKey;
-        $this->data = $_GET;
+        $this->data = $this->convertToLowerCase($data);
     }
 
     /**
@@ -51,14 +57,6 @@ class TecsWebResponse implements ResponseSignCheckInterface
         $responseSign = new ResponseSign($this->privateSecretKey, $this->data);
 
         return $this->data[self::SIGN] === $responseSign->getSign();
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasError()
-    {
-        return ((int) $this->data[self::RESPONSE_CODE] !== 0);
     }
 
     /**
@@ -211,6 +209,20 @@ class TecsWebResponse implements ResponseSignCheckInterface
      */
     private function get($key)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : null;
+        return isset($this->data[strtolower($key)]) ? $this->data[strtolower($key)] : null;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function convertToLowerCase(array $data)
+    {
+        $out = [];
+        foreach ($data as $key => $value) {
+            $out[strtolower($key)] = $value;
+        }
+
+        return $out;
     }
 }
