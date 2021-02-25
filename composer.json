@@ -2,7 +2,8 @@
   "name": "tecspayment/tecsweb-b2b-integration-php",
   "description": "A PHP library for implementing secure payment portal tecsweb",
   "require": {
-    "php": ">=5.6"
+    "php": ">=5.6",
+    "ext-iconv": "*"
   },
   "require-dev": {
     "ext-json": "*",
