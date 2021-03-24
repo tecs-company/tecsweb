@@ -51,7 +51,9 @@ class ResponseSign implements ResponseDataInterface
             ? $this->data[strtolower(self::USER_DATA)] : '';
         $toHash .= $this->secret;
 
-        return strtoupper(sha1($toHash));
+        $toHashASCII = iconv('UTF-8', 'ASCII//TRANSLIT', $toHash);
+
+        return strtoupper(sha1($toHashASCII));
     }
 
     /**

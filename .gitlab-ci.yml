@@ -1,0 +1,50 @@
+stages:
+  - build
+  - deployment
+
+image: localhost:5000/gitlab-build-node:10
+
+buildtag:
+  stage: build
+  script:
+    - git archive --format=zip --output composer-package.zip ${CI_COMMIT_REF_NAME}
+  tags:
+    - linux
+  artifacts:
+    paths:
+      - composer-package.zip
+  only:
+    - tags
+
+deploy_rc:
+    stage: deployment
+    only:
+        - tags
+    script:
+        - version="${CI_COMMIT_REF_NAME}-rc"
+        - export PYTHONIOENCODING=utf8
+        - "curl -v --user \"${MAVEN_USERNAME}:${MAVEN_PASSWORD}\" --upload-file composer-package.zip https://repo.tecs.at/repository/composer-tecs-public/packages/upload/tecspayment/tecsweb-b2b-integration-php/${version}"
+        - "curl -s --header \"PRIVATE-TOKEN: $MATTERMOST_TOKEN\" \"https://styx.tecs.at/api/v4/projects/$CI_PROJECT_ID/releases/$CI_COMMIT_REF_NAME\" | python -c \"import sys, json; data=json.load(sys.stdin); print 'payload={\\\"channel\\\":\\\"cpi\\\",\\\"username\\\": \\\"' + data['author']['name'] + '\\\",  \\\"icon_url\\\": \\\"https://styx.tecs.at/tecs-public/icons/raw/master/ops/env_test.png\\\", \\\"text\\\": \\\"@all new release of $CI_PROJECT_PATH, version $CI_COMMIT_REF_NAME deployed RC:\\\\\\n' + data['description'].replace(\\\"\\r\\n\\\", \\\"\\\\\\n\\\") + '\\\"}'\" | curl -i -X POST -d @-  $MATTERMOST_HOOK"
+    environment:
+        name: rc
+    tags:
+        - linux
+    dependencies:
+        - buildtag
+
+deploy_release:
+  stage: deployment
+  only:
+    - tags
+  script:
+    - version=$CI_COMMIT_REF_NAME
+    - export PYTHONIOENCODING=utf8
+    - "curl -v --user \"${MAVEN_USERNAME}:${MAVEN_PASSWORD}\" --upload-file composer-package.zip https://repo.tecs.at/repository/composer-tecs-public/packages/upload/tecspayment/tecsweb-b2b-integration-php/${version}"
+    - "curl -s --header \"PRIVATE-TOKEN: $MATTERMOST_TOKEN\" \"https://styx.tecs.at/api/v4/projects/$CI_PROJECT_ID/releases/$CI_COMMIT_REF_NAME\" | python -c \"import sys, json; data=json.load(sys.stdin); print 'payload={\\\"channel\\\":\\\"cpi\\\",\\\"username\\\": \\\"' + data['author']['name'] + '\\\",  \\\"icon_url\\\": \\\"https://styx.tecs.at/tecs-public/icons/raw/master/ops/env_test.png\\\", \\\"text\\\": \\\"@all new release of $CI_PROJECT_PATH, version $CI_COMMIT_REF_NAME deployed RELEASE:\\\\\\n' + data['description'].replace(\\\"\\r\\n\\\", \\\"\\\\\\n\\\") + '\\\"}'\" | curl -i -X POST -d @-  $MATTERMOST_HOOK"
+  environment:
+    name: release
+  tags:
+    - linux
+  dependencies:
+    - buildtag
+  when: manual

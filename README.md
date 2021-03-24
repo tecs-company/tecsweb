@@ -6,6 +6,21 @@ A PHP library for implementing secure payment portal TecsWeb
 
 ### Via Composer
 
+Add the **TECS** composer repository to your composer.json
+
+```json
+{
+   "repositories": [
+       {
+           "type": "composer",
+           "url": "https://repo.tecs.at/repository/composer-tecs-public/"
+       }
+   ]
+}
+```
+
+Then type:
+
 ```
 composer require tecspayment/tecsweb-b2b-integration-php
 ```

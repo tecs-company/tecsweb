@@ -62,7 +62,9 @@ class Sign implements RequestDataInterface
 
         $toSign = implode('|', $toImplode) . $this->secret;
 
-        return strtoupper(sha1($toSign));
+        $toSignASCII = iconv('UTF-8', 'ASCII//TRANSLIT', $toSign);
+
+        return strtoupper(sha1($toSignASCII));
     }
 
     /**
